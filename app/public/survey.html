@@ -55,7 +55,7 @@
                 </div>
             </form>
         </div>
-    <div>
+    <!-- <div>
         <h3>Question 3</h3>
         <p>Holidays are best spent alone, maybe with one other person.</p>
         <form>
@@ -189,12 +189,12 @@
                         </select>
                 </div>
             </form>
-        </div>
-    <div><button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#resultModal">Submit!</button>
+        </div>  -->
+    <div><button type="button" class="btn btn-secondary btn-lg" id="submit-button" data-toggle="modal" data-target="#resultModal">Submit!</button>
     </div>
     <div class="card">
             <div class="card-body">
-              <p class="card-text"><a href="#" class="badge badge-light">API Friends List</a><a href="#" class="badge badge-light">Home</a></p>
+              <p class="card-text"><a href="/api/friends" class="badge badge-light">API Friends List</a><a href="#" class="badge badge-light">Home</a></p>
             </div>
           </div>
       
@@ -217,11 +217,40 @@
           </div>
         </div>
       </div>
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 </body>
 </html>
+<script type="text/javascript">
+    $("#submit-button").on("click", function(event) {
+        event.preventDefault();
+        var userInfo = {
+            name:$("#name-field").val().trim(),
+            photo:$("#user-photo").val().trim()
+        };
+        // var photo = $("user-photo")
+        var newMatch = {
+            question1: $("#question1").val().trim(),
+            question2: $("#question2").val().trim()
+        };
+        // console.log(userInfo)  
+        // console.log(newMatch)                
 
+        $.post("/api/friends", newMatch, function(data) {
+        console.log(newMatch);
+        //code to bring up modal should go here?
+
+        $("#question1").val("");
+        $("#question2").val("");
+
+    });
+});
+
+    
+
+    
+    
+    
+</script>
 
