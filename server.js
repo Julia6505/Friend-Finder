@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
 require("./app/routing/html-routes")(app);
-// require("./app/routing/api-routes")(app);
+require("./app/routing/api-routes")(app);
 
 app.listen(PORT, function(){
     console.log("App listening on local host" + PORT)
