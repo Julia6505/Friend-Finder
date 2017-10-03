@@ -7,7 +7,7 @@ var characterData = [
     { 
         name: "Ellen Griswold",
         photo: "www.google.com",
-        scores: [2, 2]
+        scores: [2,2]
     },
     { 
         name: "Aunt Bethany",

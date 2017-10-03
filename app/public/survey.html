@@ -197,8 +197,6 @@
               <p class="card-text"><a href="/api/friends" class="badge badge-light">API Friends List</a><a href="#" class="badge badge-light">Home</a></p>
             </div>
           </div>
-      
-      Modal -->
     <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document"> -->
           <div class="modal-content">
@@ -226,57 +224,57 @@
 
 $("#submit-button").on("click", function(event) {
         event.preventDefault();
+        //code to push user answers into an array
         var answerArray = [];
             answerArray.push($("#question1").val())
             answerArray.push($("#question2").val())
-            // console.log(answerArray);
+            console.log(answerArray);
 			
         var newMatch = {
             name:$("#name-field").val().trim(),
             photo:$("#user-photo").val().trim(),
             scores: answerArray
         }
-    
-        
         // console.log(newMatch)                
         var currentURL = window.location.origin;
         var differenceArray = [];
-
+        var answerDifference;
+        
         $.post("/api/friends", newMatch, 
         function(data) {
-            // if(data) {
-            // alert(data + "Heyyy")}
         });
         $.ajax({
             url: currentURL + "/api/friends", 
             method: "GET"
         }).done(function(res){
-            for (i=0; i < 4; i++) {
+            //loop through characters on json page
+            for (i=0; i < 4 ; i++) {
+                //set answerDiffernce to 0 so that we can control the loop
+                answerDifference = 0;
+                //loop through the array of quiz answers
                 for(j=0; j < 2; j++){
-            var answerDifference = Math.abs(parseInt(res[i].scores[j] - answerArray[j]));
-            // answerDifference.push(differenceArray);
-            // console.log(res[i].name, ":", res[i].scores[j]);
-            // console.log("Answer: ", answerArray[j]);
-            console.log(answerDifference);
+                //find differences between each value in arrays (index 0 value of user answer with index 0 value of character array, etc.)
+                    answerDifference += Math.abs(parseInt(res[i].scores[j] - answerArray[j]));
+                //stop loop 
+                if(j===1)
+                    {
+                //put differences in one array so they can be compared  
+                differenceArray.push(answerDifference);
+                    }
+                }
             }
-        }
+            console.log(differenceArray)    
+            //find the smallest difference and it's index location so it can be used to refer to character
+            var yourResult = differenceArray.indexOf(Math.min.apply(null,differenceArray))
+            
         })
-
+//still needed: display yourResult in modal ()
+//all consoles check out and logic is working to find differences between user and character values, add the sum of the differences and then compare the sums to each other
        $("#name-field").val("");
        $("#user-photo").val("");
        $("#question1").val("");
        $("#question2").val("");
     });
-
-
-//     var result1 = array1.reduce(function(accumulator,currentValue) {
-// return accumulator + currentValue;
-// });
-
-  
-
-    
-    
     
 </script>
 
