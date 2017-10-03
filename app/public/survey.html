@@ -27,7 +27,7 @@
         <form>
             <div class="form-group col-md-2">
                   <label for="question1"></label>
-                  <select class="form-control" id="question1">
+                  <select class="form-control score" id="question1">
                         <option>Select Answer</option>
                         <option>1</option>
                         <option>2</option>
@@ -44,7 +44,7 @@
         <form>
             <div class="form-group col-md-2">
                     <label for="question2"></label>
-                    <select class="form-control" id="question2">
+                    <select class="form-control score" id="question2">
                         <option>Select Answer</option>
                         <option>1</option>
                         <option>2</option>
@@ -198,9 +198,9 @@
             </div>
           </div>
       
-      <!-- Modal -->
-      <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+      Modal -->
+    <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document"> -->
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Your Holiday Soulmate is </h5>
@@ -223,33 +223,57 @@
 </body>
 </html>
 <script type="text/javascript">
-    $("#submit-button").on("click", function(event) {
+
+$("#submit-button").on("click", function(event) {
         event.preventDefault();
-        var answers = [];
-        answers.push(parseInt)
+        var answerArray = [];
+            answerArray.push($("#question1").val())
+            answerArray.push($("#question2").val())
+            // console.log(answerArray);
+			
         var newMatch = {
             name:$("#name-field").val().trim(),
             photo:$("#user-photo").val().trim(),
-            scores: answers,
-            question2: $("#question2").val().trim()
-        };
-
-        // console.log(userInfo)  
+            scores: answerArray
+        }
+    
+        
         // console.log(newMatch)                
+        var currentURL = window.location.origin;
+        var differenceArray = [];
 
         $.post("/api/friends", newMatch, 
-         function(data) {
-             console.log(data);
+        function(data) {
+            // if(data) {
+            // alert(data + "Heyyy")}
+        });
+        $.ajax({
+            url: currentURL + "/api/friends", 
+            method: "GET"
+        }).done(function(res){
+            for (i=0; i < 4; i++) {
+                for(j=0; j < 2; j++){
+            var answerDifference = Math.abs(parseInt(res[i].scores[j] - answerArray[j]));
+            // answerDifference.push(differenceArray);
+            // console.log(res[i].name, ":", res[i].scores[j]);
+            // console.log("Answer: ", answerArray[j]);
+            console.log(answerDifference);
+            }
+        }
+        })
 
-        $("#name-field").val("");
-        $("#user-photo").val("");
-        $("#question1").val("");
-        $("#question2").val("");
-
+       $("#name-field").val("");
+       $("#user-photo").val("");
+       $("#question1").val("");
+       $("#question2").val("");
     });
-});
 
-    
+
+//     var result1 = array1.reduce(function(accumulator,currentValue) {
+// return accumulator + currentValue;
+// });
+
+  
 
     
     
